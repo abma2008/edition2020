@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container">
+    <div class="card" style="border:2px solid bisque;">
+    <div class="card-header" style="font-family:Georgia, 'Times New Roman', Times, serif; background-color:bisque;">
+        <h4>
+            Show the Sum of each Type Between Two Dates:
+        </h4>
+    </div>
+    <form action="" method="POST">
+    <div class="card-body">
+
+            {% csrf_token %}
+            {{form|crispy}}
+    </div>
+    <div class="card-footer" style="background-color:lightblue;">
+        <button type="submit" class="btn">
+            <i class="fa fa-question-circle fa-2x"></i>
+        </button>
+        <button type="reset" class="btn" style="float:right">
+            <i class="fa fa-refresh fa-2x"></i>
+        </button>
+    </div>
+
+        </form>
+
+    </div>
+    <br>
+    <!--{% if messages %}-->
+    <!--<div class="alert alert-warning">-->
+    <!--    {% for message in messages %}-->
+    <!--    <b>{{message}}</b>-->
+    <!--    {% endfor %}-->
+    <!--</div>-->
+    <!--{% endif %}-->
+    {% if dict_types %}
+    <h4>
+        Statistics of Type Items between
+        <b style="color:red">{{from_date}}</b>
+        and
+        <b style="color:red">{{to_date}}</b>
+    </h4>
+    <hr>
+
+    <div style="overflow-x: auto; border:2px solid bisque">
+        <table class="table">
+            <tr style="background-color:bisque; border:2px solid bisque; border-radius: 2px solid bisque">
+                <th><b>Type Name</b></th>
+                <th><b>Total Amount</b></th>
+
+            </tr>
+            <tr>
+            {% for key, value in dict_types.items %}
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+    {% endif %}
+
+    <!-- This is the part responsible for displaying the overall Sum of Types during that period -->
+    {% if overall %}
+    <div>
+        <div class="table">
+            <table>
+                <tr>
+                    <td style="background-color:bisque; border:2px solid bisque; border-radius:2px solid bisque">
+                        <b>Total Amount:</b><b style="color:red"> {{overall}} OMR</b></td>
+                </tr>
+                <tr>
+                    <td style="background-color:bisque; border:2px solid bisque; border-radius:2px solid bisque">
+                        <b>Total Records:</b><b style="color:red"> {{total_records}}</b></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

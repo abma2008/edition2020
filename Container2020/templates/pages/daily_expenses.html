@@ -1,0 +1,172 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!--
+    This is the page for displaying the records saved daily for expense without
+    having to inquire the whole table using data. A way of saving time to view
+    directly by signing in and then, clicking the button 'Daily Expense'
+ -->
+
+ <!-- Setting the Sweet Alert to delete the record chosen: -->
+
+
+
+{% block content %}
+<div class="container">
+    <div class="alert alert-warning" style="box-shadow: 3px 3px 3px 3px; color:brown; text-align:center; border-radius:50px; font-weight:bold;">
+        <h4 style="color:brown;">
+            Viewing The daily Expenses
+
+        </h4>
+        <p>
+        <h5 style="color:darkgreen;">{{today}}</h5>
+        </p>
+        <p style="box-shadow:3px 3px 3px 3px; background-color:bisque; color:red; border-radius:15px;">
+            {% if total_amount %}
+            Amount: {{total_amount}} OMR
+            {% else %}
+            Amount: 0.000 OMR
+            {% endif %}
+        </p>
+    </div>
+    <div style="overflow-x: auto;">
+        {% if dict_expenses %}
+        <table class="table" style="border:2px solid black;">
+            <thead>
+                <tr style="background-color:bisque;">
+                    <th>#</th>
+                    <th>Service</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>View</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            {% for key, value in dict_expenses.items %}
+            <tbody>
+                {% if value.2 >= 15 %}
+
+                <tr style="color:darkred; font-weight:bold; background-color:black;">
+                    <td>{{key}}</td>
+                    <td>{{value.0}}</td>
+                    <td>{{value.1}}</td>
+                    <td>{{value.2}}</td>
+                    <td>{{value.3}}</td>
+                    <td>
+                        <button id="display_note" onclick="ShowNote(this)" value="{{value.4}}" class="btn-sm btn-outline-danger" style="background-color: red; width:auto; height:40px;">
+                            <i class="fa fa-eye fa-lg"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_expense' value.5 %}" class="btn-sm"><i class="fa fa-pencil fa-lg" style="color:red;"></i></a>
+                    </td>
+                    <td>
+                        <a href="#" onclick="DeleteExpense({{value.5}})" class="btn-sm"><i class="fa fa-trash fa-lg" style="color:red;"></i></a>
+                    </td>
+
+                </tr>
+                {% elif value.2 >= 5 and value.2 <= 15 %}
+                <tr style="color:#d9b51c; font-weight:bold; background-color:black;">
+                    <td>{{key}}</td>
+                    <td>{{value.0}}</td>
+                    <td>{{value.1}}</td>
+                    <td>{{value.2}}</td>
+                    <td>{{value.3}}</td>
+                    <td>
+                        <button id="display_note" onclick="ShowNote(this)" value="{{value.4}}" class="btn-sm btn-outline-warning" style="background-color: orange; width:auto; height:40px;">
+                            <i class="fa fa-eye fa-lg"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_expense' value.5 %}" class="btn-sm"><i class="fa fa-pencil fa-lg" style="color:orange;"></i></a>
+                    </td>
+                    <td>
+                        <a href="#" onclick="DeleteExpense({{value.5}})" class="btn-sm" style="color:orange;"><i class="fa fa-trash fa-lg" style="color:orange;"></i></a>
+                    </td>
+
+                </tr>
+                {% else %}
+                <tr style="color:black; color:darkgreen;">
+                    <td>{{key}}</td>
+                    <td>{{value.0}}</td>
+                    <td>{{value.1}}</td>
+                    <td>{{value.2}}</td>
+                    <td>{{value.3}}</td>
+                    <td>
+                        <button id="display_note" onclick="ShowNote(this)" value="{{value.4}}" class="btn-sm btn-outline-success" style="background-color: lightgreen; width:auto; height:40px;">
+                            <i class="fa fa-eye fa-lg"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_expense' value.5 %}" class="btn-sm"><i class="fa fa-pencil fa-lg" style="color:lightgreen;"></i></a>
+                    </td>
+                    <td>
+                        <a href="#" onclick="DeleteExpense({{value.5}})" class="btn-sm"><i class="fa fa-trash fa-lg" style="color:lightgreen;"></i></a>
+                    </td>
+                </tr>
+                {% endif %}
+
+            </tbody>
+            {% endfor %}
+
+        </table>
+        {% else %}
+        <div class="alert alert-warning" style="text-align: center;  border-radius:15px; color:brown;">
+            <h5 style="box-shadow:5px 5px 5px 5px; color:blue; border-radius:15px;">
+                No Expenses saved for today
+            </h5>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+<!-- Using the following function to create a sweet alert 2 js to delete a record: -->
+<script>
+    function DeleteExpense(id){
+        Swal.fire({
+            'title': 'Delete Expense',
+            'text': 'Are you sure you want to delete',
+            'icon': 'warning',
+            'showCancelButton': true,
+            'cancelButtonText': 'No, Abort',
+            'confirmButtonText': 'Yes, Delete',
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href="/daily_expense_delete/"+id
+            }
+        })
+    }
+
+    //Testing to see if we can manage to display the note in sweet alert or not:
+    function ShowNote(b){
+        const note = b.value
+        if(note.length >0){
+            Swal.fire({
+            title: 'Remarks',
+            text: note,
+            icon: 'success',
+            confirmButtonColor: 'Green'
+        })
+
+        }
+        else{
+            Swal.fire({
+            title: 'Remarks',
+            text: 'This record does not have a note or remark',
+            icon: 'error',
+            confirmButtonColor: 'red'
+            })
+        }
+
+    }
+
+
+
+</script>
+{% endblock content %}

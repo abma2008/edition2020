@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="container">
+        {% for message in messages %}
+        <div class="alert alert-info" style="color:brown; border:2px; border-radius:2px">
+            {{message}}
+        </div>
+        {% endfor %}
+        
+            <div>
+                
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-header">
+                        <b>Simple Calculator</b>
+                    </div>
+                    <div class="card-body">
+                        <strong>Enter First Number</strong>
+                        <br>
+                        <input type="text" name="number1" placeholder="">
+                        <br>
+                        <strong>Enter Second Number</strong>
+                        <br>
+                        <input type="text" name="number2" placeholder="">
+                                
+                        <select name="operation" >
+                            <option value="Addition">Addition</option>
+                            <option value="Subtraction">Subtraction</option>
+                            <option value="Multiplication">Multiplication</option>
+                            <option value="Division">Division</option>
+                        </select>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-outline-success">Calculate</button>
+                    </div>
+                    
+                        
+                    
+                </form>
+        </div>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock content %}

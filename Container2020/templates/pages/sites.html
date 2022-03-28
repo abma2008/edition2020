@@ -1,0 +1,110 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+  .title{
+    border: 10px solid burlywood;
+    box-shadow: 20px solid burlywood;
+  }
+</style>
+
+<div class="container">
+
+<hr>
+  <!--{% for message in messages %}-->
+  <!--<div class="alert alert-info">-->
+  <!--  {{message}}-->
+  <!--</div>-->
+  <!--{% endfor %}-->
+    {% if sites %}
+    {% for site in sites %}
+
+    <div style="background-color:lightblue; border-radius:4px solid brown">
+      <div class="card-header">
+        <h3>{{site.title}}</h3>
+      </div>
+
+    </div>
+
+    <div class="card alert alert-warning">
+      {% if site.image %}
+      <div class="card-header alert alert-warning"><img src="{{site.image.url}}" height="400px" width="400px" class="img-fluid img-thumbnail rounded"></div>
+      {% endif %}
+      <div class="card-body" style="background-color:white;font-family:Times;font-size:large;border:2px solid lightblue;">{{site.description}}</div>
+      <div class="card-footer alert alert-info">
+        <a href="{{site.url}}" target="_blank" class="btn"><i class="fa fa-link fa-2x fa-fw"></i></a>
+        {% if user.is_superuser %}
+        <a href="{% url 'edit_site' site.id %}" class="btn"><i class="fa fa-edit fa-2x fa-fw"></i></a>
+        <a href="#" class="btn"  onclick="Delete_Site({{site.id}})"><i class="fa fa-trash fa-2x fa-fw"></i></a>
+
+        {% endif %}
+
+      </div>
+
+    </div>
+    <hr style="background-color:rgb(180, 147, 107); border:2px solid rgb(180, 147, 107)">
+    {% endfor %}
+    {% else %}
+    <h2> No sites are available at the present time. Sorry</h2>
+    {% endif %}
+
+    {% if user.is_superuser %}
+    <div>
+      <div class="alert alert-warning">
+
+        <a href="{% url 'add_site' %}" class="btn btn-sm btn-outline-success"> Add Site</a>
+
+        <a href="#" onclick="DeleteAllSites()" class="btn btn-sm btn-outline-danger" style="float:right;">
+                Delete All Sites
+        </a>
+
+      </div>
+    </div>
+
+
+    {% endif %}
+  </div>
+
+  <!-- ADDING A SWEET ALERT 2 FOR DELETING ALL SITES TOGETHER-->
+  <script>
+     // This is the Delete All sites function:
+        function DeleteAllSites(){
+          Swal.fire({
+              title: 'All Sites Delete Alert',
+              text: 'Are you sure you want to delete all sites?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, Delete',
+              cancelButtonText: 'No, Abort',
+
+          }).then(function(sites){
+              if(sites.isConfirmed){
+                  window.location.href="/"+"all_sites_delete"
+              }
+          })
+      }
+
+    //   This is the delete a specific Site Function:
+        function Delete_Site(id){
+
+          Swal.fire({
+              title:'Site Deletion Alert',
+              text: 'Are you sure you want to delete Site number'+id+'?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, delete',
+              cancelButtonText: 'No, abort',
+
+          }).then(function(site){
+              if(site.isConfirmed){
+                  window.location.href="/"+"delete_site/"+id;
+              }
+          })
+      }
+
+
+  </script>
+
+{% endblock content %}

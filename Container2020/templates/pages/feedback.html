@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="container">
+        <!--{% for message in messages %}-->
+        <!--<div class="alert alert-success" style="color:black; border:2px; border-radius:2px">-->
+        <!--    {{message}}-->
+        <!--</div>-->
+        <!--{% endfor %}-->
+
+            <div>
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-header" style="background-color:bisque;">
+                        <b>Please Fill The form Below</b>
+                    </div>
+                    <div class="card-body">
+                        {{form|crispy}}
+                    </div>
+                    <div class="card-footer" style="background-color:bisque">
+                        <button type="submit" class="btn">
+                            <i class="fa fa-arrow-circle-right fa-2x"></i>
+                        </button>
+                        <button type="reset" class="btn" style="float:right">
+                            <i class="fa fa-refresh fa-2x"></i>
+                        </button>
+                    </div>
+
+
+
+                </form>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

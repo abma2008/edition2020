@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <!--{% for message in messages %}-->
+    <!--<div class="alert alert-success">-->
+    <!--    {{message}}-->
+    <!--</div>-->
+    <!--{% endfor %}-->
+    <h1> Expenses List:</h1>
+    <div class="container">
+        <div style="border:1px solid black">
+            {% if expenses %}
+            <div style="overflow-x: auto;">
+                <table>
+                    <tr>
+                        <th><b>Date</b></th>
+                        <th><b>Service</b></th>
+                        <th><b>Type</b></th>
+                        <th><b>Payment</b></th>
+                        <th><b>Amount</b></th>
+                    </tr>
+                    <tr>
+
+                        {% for expense in expenses %}
+                        <td>{{expense.only_date}}</td>
+                        <td>{{expense.service}}</td>
+                        <td>{{expense.type.name}}</td>
+                        <td>{{expense.payment.name}}</td>
+                        <td>{{expense.amount}}</td>
+                    </tr>
+                    {% endfor  %}
+                </table>
+
+            </div>
+
+            {% else %}
+            <b> No Expenses To view at the moment</b>
+            {% endif %}
+        </div>
+
+
+
+
+        {% if expenses %}
+        <div>
+            <div class="alert alert-info">
+                <b> Total Amount = <u>{{total_amount}} in Omani Riyals</u></b>
+                <hr>
+                <b>Total Records = {{total_records}}</b>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+{% endblock content %}

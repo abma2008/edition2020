@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container">
+    <h1>About:</h1>
+    <p>
+        Still in the process of <strong>Learning Django Web Framework</strong>.
+    </p>
+    <div class="row">
+        <div class="col-sm-6">
+            <p>
+                The Content of this website is fairly basic and straightforward.
+                The goal here is to establish a website that is: Responsive, For public View, and also
+                for personal use as well.
+                The basics pages are:
+            </p>
+            <p>
+                <ul>
+                    <li>Login</li>
+                    <li>Sites</li>
+                    <li>Lessons</li>
+                    <li>Feedback</li>
+
+                </ul>
+            </p>
+            <p>
+                As for the lessons, we will try to upload them according to topics in the nearest time possible.
+                Thanks for visiting the website... Please leave a feedback before leaving.
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <div>
+                <img src="{% static 'images/edition2020.gif' %}" alt="" class="img-fluid" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

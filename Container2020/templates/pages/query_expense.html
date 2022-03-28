@@ -1,0 +1,162 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!-- This page is for querying the expenses based on the start and end dates -->
+<!-- Please make sure to keep it as a reference for future use -->
+{% block content %}
+
+<div class="container">
+
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="card" style="border:2px solid bisque">
+            <div class="card-header" style="background-color:bisque; color: black;">
+                <b> Querying The Expense Table Between Specified Dates:</b>
+                <hr>
+            </div>
+            <div class="card-body">
+                {{form|crispy}} <!--   this is the modification goes here  -->
+            </div>
+
+            <div class="card-footer" style="background-color:bisque; color: black;">
+                <button type="submit" class="btn">
+                    <i class="fa fa-question-circle fa-2x"></i>
+                </button>
+                <button type="reset" class="btn" style="float:right">
+                    <i class="fa fa-refresh fa-2x"></i>
+                </button>
+
+            </div>
+
+
+        </div>
+    </form>
+    <!----this is the for loop for displaying messages-->
+    {% for message in messages %}
+    <div class="alert alert-warning" style="border:2px dotted bisque">
+        <b>
+            {{message}}
+        </b>
+
+        {% if total_expenses %}
+        <hr>
+        <div class="alert alert-warning" style="border:2px dotted red">
+        <b> Total Records: <b style="color:red">{{total_expenses}}</b></b>
+        <br>
+        <b> Total Amount : <b style="color:red">{{amount_spent}} OMR</b></b>
+        {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+    <div>
+            {% if expenses %}
+            <div style="overflow-x: auto; border:2px solid bisque">
+                <table class="table">
+                    <thead>
+                    <tr style="background-color:bisque;">
+                        <th><b>Date</b></th>
+                        <th><b>Service</b></th>
+                        <th><b>Type</b></th>
+                        <th><b>Payment</b></th>
+                        <th><b>Amount</b></th>
+                        <th><b>View</b></th>
+                        <th><b>Edit</b></th>
+                    </tr>
+                    </thead>
+                    {% for expense in expenses %}
+                    <tbody>
+                        {% if expense.amount >= 50 %}
+                            <tr style="background-color:#ff595e; font-weight:bold; color:darkred;">
+                                <td>{{expense.only_date}}</td>
+                                <td>{{expense.service}}</td>
+                                <td>{{expense.type.name}}</td>
+                                <td>{{expense.payment.name}}</td>
+                                <td>{{expense.amount}}</td>
+                                <td>
+                                    <button class="btn-sm btn-outline-danger" value="{{expense.remark}}" id="view_note" onclick="viewNote(this)" style="height:40px;">
+                                    <i class="fa fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td><a href="{% url 'edit_expense' expense.id %}" class="btn"><i class="fa fa-pencil"></i></a></td>
+                            </tr>
+                        {% elif expense.amount >= 10  %}
+                            <tr style="background-color:orange; font-weight:bold;">
+                                <td>{{expense.only_date}}</td>
+                                <td>{{expense.service}}</td>
+                                <td>{{expense.type.name}}</td>
+                                <td>{{expense.payment.name}}</td>
+                                <td>{{expense.amount}}</td>
+                                <td>
+                                    <button class="btn-sm btn-outline-warning" value="{{expense.remark}}" id="view_note" onclick="viewNote(this)" style="height:40px;">
+                                    <i class="fa fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td><a href="{% url 'edit_expense' expense.id %}" class="btn"><i class="fa fa-pencil"></i></a></td>
+                            </tr>
+                        {% elif expense.amount < 10 and expense.amount >= 5 %}
+                            <tr style="background-color:#fdfae5; font-weight:bold;">
+                                <td>{{expense.only_date}}</td>
+                                <td>{{expense.service}}</td>
+                                <td>{{expense.type.name}}</td>
+                                <td>{{expense.payment.name}}</td>
+                                <td>{{expense.amount}}</td>
+                                <td>
+                                    <button class="btn-sm btn-outline-primary" value="{{expense.remark}}" id="view_note" onclick="viewNote(this)" style="height:40px;">
+                                    <i class="fa fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td><a href="{% url 'edit_expense' expense.id %}" class="btn"><i class="fa fa-pencil"></i></a></td>
+                            </tr>
+
+                        {% else %}
+                            <tr style="background-color:#f1f8e9;">
+                                <td>{{expense.only_date}}</td>
+                                <td>{{expense.service}}</td>
+                                <td>{{expense.type.name}}</td>
+                                <td>{{expense.payment.name}}</td>
+                                <td>{{expense.amount}}</td>
+                                <td>
+                                    <button class="btn-sm btn-outline-success" value="{{expense.remark}}" id="view_note" onclick="viewNote(this)" style="height:40px;">
+                                    <i class="fa fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td><a href="{% url 'edit_expense' expense.id %}" class="btn"><i class="fa fa-pencil"></i></a></td>
+                            </tr>
+                        {% endif %}
+
+                    </tbody>
+                    {% endfor  %}
+                </table>
+
+        {% endif %}
+    </div>
+
+
+<!-- Viewing the content of the remark for each record through using a button-->
+<script>
+    function viewNote(x){
+        const note = document.querySelector("#view_note")
+        if((x.value).length>0)
+        {
+            Swal.fire({
+                title: "Expense Details",
+                text: x.value,
+                icon: "success"
+            })
+        }
+        else
+        {
+            Swal.fire({
+                title: "Empty",
+                text: "No Notes recorded for this expense",
+                icon: "error",
+                confirmButtonColor: "red"
+            })
+        }
+    }
+</script>
+
+
+{% endblock content %}

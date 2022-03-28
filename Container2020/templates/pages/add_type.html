@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+    .save_button, .reset_button {
+    background-color:bisque;
+    color:black;
+    border-radius:10px;
+
+
+
+    }
+    .save_button:hover{
+        background-color: greenyellow;
+        color: black;
+        transition: 2s;
+        padding-right:5px;
+
+    }
+    .reset_button:hover{
+        background-color:red;
+        color:black;
+        transition: 2s;
+        padding-right:5px;
+    }
+</style>
+
+<div class="container">
+
+    <div class="container">
+            <!--{% for message in messages %}-->
+            <!--<div class="alert alert-success">-->
+            <!--    {{message}}  <i class="fa fa-thumbs-up fa-lg" style="color:green"></i>-->
+            <!--</div>-->
+            <!--{% endfor %}-->
+            <div>
+                <div class="card">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="card-header" style="background-color:bisque">
+                            Add Type
+                        </div>
+                        <div class="card-body">
+                            {{form|crispy}}
+                        </div>
+                        <div class="card-footer" style="background-color:bisque">
+                            <button type="submit" class="btn">
+                                <i class="fa fa-save fa-2x" style="color:green;"></i>
+                            </button>
+                            <button type="reset" class="btn" style="float:right">
+                                <i class="fa fa-refresh fa-spin fa-2x" style="color:red;"></i>
+                            </button>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+
+</div>
+
+<!-- Adding a script that allows autofocus on service_id when loading the page:-->
+<script>
+    $(document).ready(function(){
+        window.onload=function(){
+            $(`#id_service`).focus();
+        }
+    })
+</script>
+
+{% endblock content %}

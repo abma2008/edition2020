@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container">
+
+    <!--{% for message in messages %}-->
+    <!--<div class="alert alert-success" role="alert">-->
+    <!--    {{message}}-->
+    <!--</div>-->
+    <!--{% endfor %}-->
+
+    <div class="card">
+        <form action="" method="POST">
+        <div class="card-header" style="background-color:bisque; color:black">
+        <h2> Edit Expense ID: <b style="color:red;">{{expense_id}}</b></h2>
+        </div>
+
+        <div class="card-body">
+
+            {% csrf_token %}
+            {{form|crispy}}
+        </div>
+        <div class="card-footer" style="background-color:lightblue;">
+            <button type="submit" class="btn" style="border:none;">
+                <i class="fa fa-edit fa-spin fa-lg" style="color:green"></i>
+                Update
+            </button>
+        </div>
+        </form>
+    </div>
+
+
+</div>
+
+<!-- creating a script to hold the messages in sweet alert-->
+<!--		<script>-->
+<!--            {% for message in messages %}-->
+<!--		    swal('{{message}}', 'success');-->
+<!--		    {% endfor %}-->
+
+<!--		</script>-->
+
+
+
+{% endblock content %}

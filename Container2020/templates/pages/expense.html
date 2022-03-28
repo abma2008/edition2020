@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+<style>
+    .btn_border{
+        border: none;
+        border-radius: none;
+    }
+</style>
+
+{% block content %}
+<div class="container">
+    <div class="card" style="border:2px solid bisque;">
+        <div class="card-header" style="background-color:bisque;">
+        <div>
+            <h3>Track Your Expenses:</h3>
+            <hr>
+        </div>
+        </div>
+        <!-- Testing a new alert through using BootStrap-->
+        <!--{% for message in messages %}-->
+        <!--<div class="alert alert-success alert-dismissible fade show" role="alert">-->
+        <!--    <strong>Hey!</strong> {{message}}-->
+        <!--</div>-->
+        <!--{% endfor %}-->
+
+        <form action=""  method="POST" id="expense_form" load_types_url = "{% url 'load_types_url' %}" >
+        <div class="card-body">
+            {% csrf_token %}
+            {{form|crispy}}
+        </div>
+        <div class="card-footer" style="background-color:bisque;">
+            <button class="btn" type="submit">
+                <i class="fa fa-save fa-2x"></i>
+            </button>
+            <!-- Below is the first time we use the icon fa-refresh to set the resetting correct on this page to overwrite the existing stylesheet of the website-->
+            <button type="reset" class="btn" style="float:right">
+                <i class="fa fa-refresh fa-2x"></i>
+            </button>
+
+
+
+        </div>
+        </form>
+
+    </div>
+        <!--<a href="{% url 'view_expense' %}" class="btn btn-outline-success" style="color:black; background-color:aliceblue">-->
+        <!--    Check Expenses-->
+        <!--</a>-->
+
+
+</div>
+
+
+
+
+<script>
+ // adding a autofocus through using jquery:(testing effort)
+    $(document).ready(function(){
+        window.onload= function(){
+            $(`#id_service`).focus();
+        }
+    })
+// this is the part resposible for calling the types according to the chosen service:
+    $("#id_service").change(function(){
+        const url = $("#expense_form").attr("load_types_url");
+        const service_ID = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'service_id': service_ID
+            },
+            success: function(data){
+                console.log(data);
+
+                let html_data = `<option value=""> ------</option>`;
+                data.forEach(function(type){
+                    html_data += `<option value="${type.id}">${type.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_type").html(html_data);
+            }
+        })
+    })
+
+
+</script>
+
+
+
+{% endblock content %}

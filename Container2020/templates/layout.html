@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Edition 2020 Basic Django Project</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+		<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="#" class="logo"><strong>Edition</strong> 2020</a>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+									</ul>
+								</header>
+								{% if user.is_authenticated %}
+								{% if user.is_superuser %}
+								<div class="alert alert-warning" style="border-bottom:2px solid red;">
+									<b style="color:brown">{{user.first_name}} {{user.last_name}} </b>
+									<a href="{% url 'logout' %}" class="btn-sm btn-danger" style="float:right">logout</a>
+								</div>
+								{% else %}
+								<div class="alert alert-warning" style="border-bottom:2px solid red;">
+									<b>{{user.first_name}} {{user.last_name}} </b>
+									<a href="{% url 'logout' %}" class="btn-sm btn-danger" style="float:right">logout</a>
+								</div>
+								{% endif %}
+								{% endif %}
+
+
+
+							<!-- Banner -->
+								<section id="banner">
+									{% block content %}
+
+
+									{% endblock content %}
+								</section>
+
+							<!-- Section -->
+								<section>
+									<div class="alert alert-warning" style="text-align: center;border-bottom:2px solid red; border-top:2px solid red;">
+										<strong>
+											-- HTML5 Responsive --
+										</strong>
+									</div>
+								</section>
+
+							<!-- Section -->
+								<section>
+
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+							<section id="search" class="alt">
+
+							</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="{% url 'index' %}">Homepage</a></li>
+										{% if not user.is_authenticated %}
+										<li><a href="{% url 'login' %}">Login</a></li>
+										{% endif %}
+										<li><a href="{% url 'about' %}">ِAbout</a></li>
+										<li><a href="{% url 'sites' %}">Sites</a></li>
+										<li><a href="{% url 'lessons' %}">Lessons</a></li>
+										<!--<li><a href="{% url 'subscribe' %}">Subscribe</a></li>-->
+
+										<li><a href="{% url 'feedback' %}">Feedback</a></li>
+										{% if user.is_superuser %}
+										<li><a href="{% url 'add_service' %}" style="color:blue">Service</a></li>
+										<li><a href="{% url 'add_type' %}" style="color:blue">Type</a></li>
+										<li><a href="{% url 'expense' %}" style="color:blue">ُExpense</a></li>
+										<li><a href="{% url 'daily_expenses' %}" style="color:blue">Today's Expense</a></li>
+										<li><a href="{% url 'query_expense' %}" style="color:blue">ُQuery Expense</a></li>
+										<li><a href="{% url 'total_types' %}" style="color:blue">Total Types</a></li>
+										<li><a href="{% url 'percentage' %}" style="color:blue">Percentage</a></li>
+										<!--<li><a href="{% url 'send_mail' %}">Send Email</a></li>-->
+										{% endif %}
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<img src="{% static 'images/copyrights.gif' %}">
+									<br>
+									<br>
+									<a href="https://www11.lunapic.com/editor/" target="_blank" class="btn btn-outline-dark">Online Photo Editor</a>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<img src="{% static 'images/django.gif' %}">
+									<br>
+									<br>
+									<a href="https://www.djangoproject.com/start/" target="_blank" class="btn btn-outline-dark">Django version 3.2.2</a>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'js/jquery.min.js' %}"></script>
+			<script src="{% static 'js/browser.min.js' %}"></script>
+			<script src="{% static 'js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'js/util.js' %}"></script>
+			<script src="{% static 'js/main.js' %}"></script>
+		<!-- Sweet Alert 2 CDN online link-->
+		    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.all.min.js"></script>
+		    {% if messages %}
+		        {% for message in messages %}
+		            <script>
+		                Swal.fire({
+
+		                    text: '{{message}}',
+		                    icon: 'success',
+		                    timer: 2500,
+		                    showConfirmButton: false
+
+		                })
+
+
+		            </script>
+		       {% endfor %}
+		   {% endif %}
+
+		    <!--
+			Setting a timer and resettimer functions to automatically
+			logout in case if the status is idle for three minutes
+			 -->
+			 {% if user.is_authenticated %}
+			 <script>
+				//  Setting the seconds counter:
+				let seconds = 0;
+				$(document).ready(function(){
+					let timer = setInterval(timerIncrement, 1000);
+					$(this).click(resetTimer);
+					$(this).keypress(resetTimer);
+				});
+				// Reset Timer Function:
+				function resetTimer(){
+					seconds = 0;
+				}
+				// Timer increment Function:
+				function timerIncrement(){
+					if(seconds >= 100){
+						window.location.href='/logout'
+					}
+					else{
+						seconds ++;
+					}
+				}
+
+			</script>
+			 {% endif %}
+
+	</body>
+</html>

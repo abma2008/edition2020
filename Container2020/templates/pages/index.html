@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+
+<div class="content">
+    <!--{% for message in messages %}-->
+    <!--<div class="alert alert-info">-->
+    <!--    {{message}}-->
+    <!--</div>-->
+    <!--{% endfor %}-->
+
+    <div>
+    <header>
+        <strong>
+            <h3>Edition 2020 Basic Django Website<br />
+                by ABMA2008</h3>
+        </strong>
+        <p>A free and fully responsive site template</p>
+    </header>
+    <p>
+        Thanks for visiting my <strong>humble Website</strong>.
+        I have been trying to learn Django Web Framework and
+        this is as far as I can do.
+    </p>
+    <p>
+        The content of this website is basic. we will be showing some links to educating pages, whether on youtube or
+        websites to visit. There are also pages that wouldn't be visible unless an authentication is made.
+        please honor me by leaving a feedback and keep in mind. This website is still under construction..
+    </p>
+    <p>
+        Thanks again for visiting ;)
+    </p>
+    <ul class="actions">
+        <li><a href="http://abma2008.pythonanywhere.com" target="_blank" class="btn btn-outline-dark">Old Website</a></li>
+    </ul>
+</div>
+</div>
+<div>
+    <img src="{% static 'images/edition2020.jpg' %}" alt=""  class="img-fluid"/>
+</div>
+
+{% endblock content %}

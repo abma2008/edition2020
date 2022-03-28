@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="alert alert-warning">
+        <h3>View Types of Service: <strong style="color:red"> {{service.name}}</strong></h3>
+    </div>
+
+    <!-- The coding starts from here -->
+
+    {% if types_dict %}
+    <div>
+        <table class="table" style="background-color:white; overflow-x:auto;">
+            <thead>
+              <tr style="background-color:bisque;">
+                    <th scope="col"><b>ID</b></th>
+                    <th scope="col"><b>Type</b></th>
+                    <th scope="col"><b>Edit</b></th>
+                    <th scope="col"><b>delete</b></th>
+
+
+              </tr>
+            </thead>
+            {% for key, value in types_dict.items %}
+            <tbody>
+              <tr>
+                <td scope="row">{{key}}</td>
+                <td>{{value.0}}</td>
+                <td><a href="{% url 'edit_type' value.1 %}" class="btn"><i class=" fa fa-pencil fa-lg"></i></a> </td>
+                <td><button id="delete_type" onclick="DeleteType(this)" class="btn-sm btn-outline-danger" value="{{value.1}}"><i class="fa fa-trash"></i></button></td>
+
+              </tr>
+            </tbody>
+            {% endfor %}
+
+
+          </table>
+        </div>
+          {% endif %}
+</div>
+
+<!-- Adding Sweet Alert for deleting the type chosen:-->
+<script>
+    function DeleteType(x){
+        const type = x.value
+        if(type.length > 0){
+            Swal.fire({
+                title: "Delete Type Alert",
+                text: "Do you want to delete?",
+                icon: "error",
+                showCancelButton: true,
+
+            })
+            .then(function(result){
+                if(result.isConfirmed){
+                    window.location.href="/delete_type/" + type
+                }
+                else
+                {
+                    Swal.fire({
+                        text: "Operation Aborted",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    })
+                }
+            })
+        }
+    }
+</script>
+
+{% endblock content %}

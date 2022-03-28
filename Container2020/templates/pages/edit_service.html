@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header" style="background-color:bisque">
+            <h4>Edit Service Name</h4>
+        </div>
+        <form action="" method="POST">
+        <div class="card-body">
+                    {% csrf_token %}
+                    {{form|crispy}}
+
+
+
+        </div>
+        <div class="card-footer" style="background-color:lightblue;">
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-edit fa-lg fa-spin" style="color:green;"></i>
+                Update
+            </button>
+
+        </div>
+        </form>
+
+    </div>
+
+</div>
+{% endblock content %}

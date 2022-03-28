@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container" style="align-content: center;">
+
+    <div class="card">
+        {% if site_instance %}
+        <div class="card-header d-flex justify-content-center" style="background-color:bisque; border:3 px solid bisque; border-radius: 3px solid bisque;">
+        {% if site_instance.image %}
+        <img src="{{site_instance.image.url}}" alt=""  class="img-fluid"/>
+        {% endif %}
+        {% endif %}
+        </div>
+
+
+
+    <form action="" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div class="card-body" style="border: 2px solid bisque;" >
+            {{form|crispy}}
+        </div>
+
+        <div class="card-footer" style="background-color:lightblue">
+            <button type="submit" class="btn">
+                <i class="fa fa-edit fa-sping fa-lg" style="color:green"></i>
+                Update
+            </button>
+        </div>
+    </form>
+    </div>
+
+
+</div>
+
+
+{% endblock content %}

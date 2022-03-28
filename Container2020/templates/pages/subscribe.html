@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container">
+    <!--{% for message in messages %}-->
+    <!--<div class="alert alert-info">-->
+    <!--    {{message}}-->
+    <!--</div>-->
+    <!--{% endfor %}-->
+
+
+
+        <form class="form-horizontal" action='' method="POST">
+            {% csrf_token %}
+            <fieldset>
+              <div class="card">
+                <div class="card-header">
+              <div id="legend">
+                <h2>Registration</h2>
+              </div>
+              </div>
+              <div class="card-body">
+              <div class="container">
+                <div class="form-group">
+                  <!-- First Name -->
+                  <label class="form-label"  for="first_name">First Name</label>
+                  <div class="controls">
+                    <input type="text" name="first_name" placeholder="" class="input-xlarge">
+                  </div>
+                  <div class="form-group">
+                      <!-- Last Name -->
+                      <label class="form-label"  for="last_name">Last Name</label>
+                      <div class="controls">
+                        <input type="text"  name="last_name" placeholder="" class="input-xlarge">
+                      </div>
+                <div class="form-group">
+                  <!-- Username -->
+                  <label class="form-label"  for="username">Username</label>
+                  <div class="controls">
+                    <input type="text"  name="username" placeholder="" class="input-xlarge">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <!-- E-mail -->
+                  <label class="form-label" for="email">E-mail</label>
+                  <div class="controls">
+                    <input type="email"  name="email" placeholder="ُ" class="input-xlarge">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <!-- Password-->
+                  <label class="form-label" for="password">Password</label>
+                  <div class="controls">
+                    <input type="password"  name="password" placeholder="" class="input-xlarge">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <!-- Confirm Password -->
+                  <label class="form-label"  for="confirm_password">Password (Confirm)</label>
+                  <div class="controls">
+                    <input type="password"  name="confirm_password" placeholder="" class="input-xlarge">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <!-- Submit Button -->
+                  <div class="controls">
+                    <input type="submit" class="btn btn-dark" value="Register" style="background-color:antiquewhite">
+                  </div>
+                </div>
+              </div>
+
+
+    </div>
+</div>
+
+
+{% endblock content %}
